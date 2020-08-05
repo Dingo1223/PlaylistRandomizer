@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace PlaylistRandomizer
 {
     public static class Randomizer
     {
         private static readonly Random RNG = new Random();
+
+        public static async Task<List<string>> GetRandomizedMP3sAsync(string defaultPath, int count) =>
+            await Task.Run(() => GetRandomizedMP3s(defaultPath, count));
 
         /// <summary>
         /// Возвращает заданное количество рандомных mp3 из заданной директории
@@ -21,17 +25,13 @@ namespace PlaylistRandomizer
             if (di.GetFiles("*.mp3", SearchOption.AllDirectories).Length < count) return null;
 
             List<string> songs = new List<string>();
-            for (int i = 0; i < count; i++)
+            while (songs.Count < count)
             {
                 string song = null;
                 while (song == null) song = GetSong(defaultPath);
 
                 //Если данная песня уже есть в плейлисте -- пропускаем
-                if (songs.Contains(song))
-                {
-                    i--;
-                    continue;
-                }
+                if (songs.Contains(song)) continue;
                 else songs.Add(song);
             }
 

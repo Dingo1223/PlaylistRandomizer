@@ -5,85 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlaylistRandomizer"
         mc:Ignorable="d"
-        Title="Playlist Randomizer" MinHeight="400" MinWidth="600" Height="400" Width="600" 
+        Title="Playlist Randomizer" MinHeight="400" MinWidth="720" Height="400" Width="720" 
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <!--Стили кнопок-->
-        <Style TargetType="Button">
-            <Setter Property="Control.FontFamily" Value="Book Antiqua"/>
-            <Setter Property="Control.FontSize" Value="16"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Control.Foreground" Value="White"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="8, 0, 8, 0" Background="{TemplateBinding Background}" BorderBrush="SteelBlue" BorderThickness="1, 4, 4, 1">
-                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                              Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                              Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="Control.IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border CornerRadius="8, 0, 8, 0" Background="{TemplateBinding Background}" BorderBrush="LightSteelBlue" BorderThickness="1, 4, 4, 1">
-                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                      Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                      Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="Button.IsFocused" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border CornerRadius="8, 0, 8, 0" Background="{TemplateBinding Background}" BorderBrush="#FFCF48" BorderThickness="1, 4, 4, 1">
-                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                      Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                      Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-    
+
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="1, 0" StartPoint="1, 1">
-                <GradientStop Color="#1E1E1E" Offset="0"/>
-                <GradientStop Color="#AAA" Offset="1"/>
+                <GradientStop Color="#1A1A1A" Offset="0"/>
+                <GradientStop Color="#5A5A5A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
+        
         <Border BorderThickness="1" BorderBrush="#42AAFF" Margin="4" >
-            <Grid Opacity="0.5" Background="Black"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="12"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                
+                <TextBox x:Name="TbPath" Grid.Row="0" Margin="0, 0, 180, 0" Text="..." IsReadOnly="True"
+                         VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <Button x:Name="BtnSelectPath" Grid.Row="0" Margin="0, 0, 8, 0" Content="Выбрать папку"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnSelectPath_Click"/>
+
+                <TextBlock Grid.Row="1" Text="Количество песен:" Foreground="White" FontSize="16" FontFamily="Book Antiqua" 
+                           VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <TextBox x:Name="TbAmount" Grid.Row="1" Margin="148, 0, 0, 0" Width="40" Text="50"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Button x:Name="BtnMix" Margin="0, 0, 8, 0" Grid.Row="1" Content="Создать плейлист"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Click="BtnMix_Click"/>
+
+                <ProgressBar x:Name="pb" Grid.Row="2" IsIndeterminate="True" Visibility="Hidden"
+                             Background="{x:Null}" Foreground="LightSteelBlue"/>
+
+                <ListBox x:Name="LbResult" Grid.Row="3" BorderBrush="SteelBlue" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                         Foreground="White" Background="{x:Null}" FontSize="14" FontFamily="Book Antiqua"/>
+                
+                <Button x:Name="BtnSave" Grid.Row="4" Content="Сохранить этот плейлист" Visibility="Visible"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="240"
+                        Click="BtnSave_Click"/>
+            </Grid>
         </Border>
+        
         <Grid Margin="8">
-            <TextBlock x:Name="TbPath" Margin="4, 8, 180, 4" Text="..." VerticalAlignment="Top"
-                       Foreground="White" FontSize="16" FontFamily="Book Antiqua"/>
-            <Button x:Name="BtnSelectPath" Margin="4, 4, 12, 4" Content="Выбрать папку"
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Width="160" Click="BtnSelectPath_Click"/>
             
-            <TextBlock Margin="4, 40, 4, 4" Text="Количество песен:" VerticalAlignment="Top" HorizontalAlignment="Left"
-                       Foreground="White" FontSize="16" FontFamily="Book Antiqua"/>
-            <TextBox x:Name="TbAmount" Margin="156, 38, 4, 4" Width="40" Text="50"
-                     Foreground="White" Background="{x:Null}" FontSize="16" FontFamily="Book Antiqua"
-                     HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="#42AAFF"/>
-            <Button x:Name="BtnMix" Margin="4, 36, 12, 4" Content="Создать плейлист"
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Width="160" Click="BtnMix_Click"/>
-            
-            <ListBox x:Name="LbResult" Margin="4, 72, 4, 40" BorderBrush="#42AAFF" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                     Foreground="White" Background="{x:Null}" FontSize="14" FontFamily="Book Antiqua"/>
-            <Button x:Name="BtnSave" Margin="12, 4, 12, 8" Content="Сохранить этот плейлист" Visibility="Hidden"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="BtnSave_Click"/>
         </Grid>
     </Grid>
 </Window>
