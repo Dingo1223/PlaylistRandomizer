@@ -5,47 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlaylistRandomizer"
         mc:Ignorable="d"
-        Title="Playlist Randomizer" MinHeight="400" MinWidth="720" Height="400" Width="720" 
+        Title="Playlist Randomizer" MinHeight="400" MinWidth="800" Height="400" Width="800" 
         WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="1, 0" StartPoint="1, 1">
-                <GradientStop Color="#1A1A1A" Offset="0"/>
+                <GradientStop Color="#2A2A2A" Offset="0"/>
                 <GradientStop Color="#5A5A5A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
         
-        <Border BorderThickness="1" BorderBrush="#42AAFF" Margin="4" >
+        <Border BorderThickness="1" BorderBrush="#42AAFF" Margin="4">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="12"/>
                     <RowDefinition/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 
-                <TextBox x:Name="TbPath" Grid.Row="0" Margin="0, 0, 180, 0" Text="..." IsReadOnly="True"
-                         VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <Button x:Name="BtnSelectPath" Grid.Row="0" Margin="0, 0, 8, 0" Content="Выбрать папку"
-                        HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnSelectPath_Click"/>
+                <TextBox x:Name="TbPath" Grid.Row="0" Margin="0, 0, 188, 0" Text="..." IsReadOnly="True"/>
+                <Button x:Name="BtnSelectPath" Grid.Row="0" Margin="0, 0, 4, 0" Content="Выбрать папку"
+                        HorizontalAlignment="Right" Click="BtnSelectPath_Click"/>
 
-                <TextBlock Grid.Row="1" Text="Количество песен:" Foreground="White" FontSize="16" FontFamily="Book Antiqua" 
-                           VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <TextBox x:Name="TbAmount" Grid.Row="1" Margin="148, 0, 0, 0" Width="40" Text="50"
-                     HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button x:Name="BtnMix" Margin="0, 0, 8, 0" Grid.Row="1" Content="Создать плейлист"
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Click="BtnMix_Click"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Text="Количество песен: " Foreground="White" FontSize="16" 
+                               FontFamily="Book Antiqua" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TbAmount"  Width="40" Text="50"/>
+                </StackPanel>
+
+                <Button x:Name="BtnMix" Margin="0, 0, 4, 0" Grid.Row="1" Content="Создать плейлист"
+                        HorizontalAlignment="Right" Click="BtnMix_Click"/>
 
                 <ProgressBar x:Name="pb" Grid.Row="2" IsIndeterminate="True" Visibility="Hidden"
                              Background="{x:Null}" Foreground="LightSteelBlue"/>
 
-                <ListBox x:Name="LbResult" Grid.Row="3" BorderBrush="SteelBlue" ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
-                         Foreground="White" Background="{x:Null}" FontSize="14" FontFamily="Book Antiqua"/>
-                
-                <Button x:Name="BtnSave" Grid.Row="4" Content="Сохранить этот плейлист" Visibility="Visible"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="240"
+                <ListBox x:Name="LbResult" Grid.Row="3" BorderBrush="SteelBlue" Background="{x:Null}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
+
+                <Button x:Name="BtnDeleteSelected" Grid.Row="4" Content="Удалить выбранное" 
+                        Visibility="Hidden" Click="BtnReplaceSelected_Click"/>
+                <Button x:Name="BtnReplaceSelected" Grid.Row="4" Margin="184, 0, 0, 0" Content="Заменить выбранное" 
+                        Visibility="Hidden" Click="BtnReplaceSelected_Click"/>
+                <Button x:Name="BtnSave" Grid.Row="4" Content="Сохранить этот плейлист" 
+                        Visibility="Hidden" HorizontalAlignment="Right" Width="240" 
                         Click="BtnSave_Click"/>
             </Grid>
         </Border>

@@ -8,41 +8,64 @@ namespace PlaylistRandomizer
     public static class Randomizer
     {
         private static readonly Random RNG = new Random();
-
-        public static async Task<List<string>> GetRandomizedMP3sAsync(string defaultPath, int count) =>
-            await Task.Run(() => GetRandomizedMP3s(defaultPath, count));
+        /// <summary>
+        /// Музыкальные файлы
+        /// </summary>
+        public static List<string> Songs { get; set; }
 
         /// <summary>
-        /// Возвращает заданное количество рандомных mp3 из заданной директории
+        /// Выбирает заданное количество рандомных файлов из заданной директории
         /// </summary>
         /// <param name="defaultPath">Директория для поиска</param>
-        /// <param name="count">Количество требуемых mp3-файлов</param>
-        /// <returns>Список mp3 (либо null, если в директории не хватает mp3)</returns>
-        public static List<string> GetRandomizedMP3s(string defaultPath, int count)
+        /// <param name="count">Количество требуемых файлов</param>
+        public static void GetRandomizedSongs(string defaultPath, int count)
         {
+            Songs = null;
             //Проверяем, достаточно ли в заданной директории mp3-файлов
             DirectoryInfo di = new DirectoryInfo(defaultPath);
-            if (di.GetFiles("*.mp3", SearchOption.AllDirectories).Length < count) return null;
+            if (di.GetFiles("*.mp3", SearchOption.AllDirectories).Length < count) return;
 
-            List<string> songs = new List<string>();
-            while (songs.Count < count)
+            Songs = new List<string>();
+            while (Songs.Count < count)
             {
                 string song = null;
                 while (song == null) song = GetSong(defaultPath);
 
                 //Если данная песня уже есть в плейлисте -- пропускаем
-                if (songs.Contains(song)) continue;
-                else songs.Add(song);
+                if (Songs.Contains(song)) continue;
+                else Songs.Add(song);
             }
-
-            return songs;
         }
 
         /// <summary>
-        /// Выбирает случайный mp3 файл из данной директории
+        /// Заменяет выбранные песни в плейлисте
         /// </summary>
         /// <param name="defaultPath">Директория для поиска</param>
-        /// <returns>Случайный mp3-файл (либо null, если в папке нет mp3-файлов)</returns>
+        /// <param name="songsForReplace">Список песен, которые нужно заменить</param>
+        /// <param name="isDelete">Если true, выбранные песни удаляются из плейлиста без замены новыми</param>
+        public static void ReplaceSongs(string defaultPath, List<string> songsForReplace, bool isDelete)
+        {
+            int count = Songs.Count;
+            foreach (string song in songsForReplace) Songs.Remove(song);
+            if (!isDelete)
+            {
+                while (Songs.Count < count)
+                {
+                    string song = null;
+                    while (song == null) song = GetSong(defaultPath);
+
+                    //Если данная песня уже есть в плейлисте, либо она удалялась -- пропускаем
+                    if (Songs.Contains(song) || songsForReplace.Contains(song)) continue;
+                    else Songs.Add(song);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Выбирает случайный файл из данной директории
+        /// </summary>
+        /// <param name="defaultPath">Директория для поиска</param>
+        /// <returns>Случайный файл (либо null, если в папке нет файлов в нужном формате)</returns>
         private static string GetSong(string defaultPath)
         {
             DirectoryInfo di = new DirectoryInfo(defaultPath);
