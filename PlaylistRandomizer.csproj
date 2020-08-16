@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppVM.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="PlaylistElement.cs" />
     <Compile Include="Randomizer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
