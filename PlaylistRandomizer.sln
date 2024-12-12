@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.452
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistRandomizer", "PlaylistRandomizer.csproj", "{9CAFA0B3-41D8-4AED-B3EA-768EB028F6AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistRandomizerCore", "PlaylistRandomizerCore\PlaylistRandomizerCore.csproj", "{7CF86E46-FBD0-484F-BAC6-8E7AE3269D4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9CAFA0B3-41D8-4AED-B3EA-768EB028F6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CAFA0B3-41D8-4AED-B3EA-768EB028F6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CAFA0B3-41D8-4AED-B3EA-768EB028F6AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF86E46-FBD0-484F-BAC6-8E7AE3269D4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF86E46-FBD0-484F-BAC6-8E7AE3269D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF86E46-FBD0-484F-BAC6-8E7AE3269D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF86E46-FBD0-484F-BAC6-8E7AE3269D4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
